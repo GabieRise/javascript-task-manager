@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow | Task Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <main class="app-container">
+
+        <header class="app-header">
+            <h1>TaskFlow</h1>
+            <p>Organise your day, one task at a time.</p>
+        </header>
+
+        <!-- Task Form -->
+        <section class="task-form-section">
+
+            <form id="task-form">
+
+                <label for="task-input">What do you need to do?</label>
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        id="task-input"
+                        placeholder="Enter a new task..."
+                        required
+                    >
+
+                    <button type="submit">
+                        Add Task
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- Task Filters -->
+        <section class="task-section">
+
+            <div class="task-heading">
+                <h2>My Tasks</h2>
+                <p id="task-count">0 tasks</p>
+            </div>
+
+            <div class="task-filters">
+
+                <button class="filter-btn active" data-filter="all">
+                    All
+                </button>
+
+                <button class="filter-btn" data-filter="active">
+                    Active
+                </button>
+
+                <button class="filter-btn" data-filter="completed">
+                    Completed
+                </button>
+
+            </div>
+
+            <!-- Task List -->
+            <ul id="task-list">
+
+            </ul>
+
+            <p id="empty-message">
+                No tasks yet. Add your first task!
+            </p>
+
+        </section>
+
+        <footer class="app-footer">
+            <p>Built with HTML, CSS and JavaScript.</p>
+        </footer>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+
+/* =========================
+   1. GLOBAL STYLES
+========================= */
+
+:root {
+    --primary: #7541f5;
+    --primary-light: #eee8ff;
+    --dark: #172033;
+    --grey: #647084;
+    --background: #f5f6fb;
+    --white: #ffffff;
+    --border: #e5e7ef;
+    --success: #159b69;
+    --danger: #e44848;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--dark);
+    min-height: 100vh;
+    padding: 50px 20px;
+}
+
+
+/* =========================
+   2. MAIN APP CONTAINER
+========================= */
+
+.app-container {
+    max-width: 650px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   3. APP HEADER
+========================= */
+
+.app-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.app-header h1 {
+    font-size: 36px;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.app-header p {
+    color: var(--grey);
+    font-size: 15px;
+}
+
+
+/* =========================
+   4. TASK INPUT FORM
+========================= */
+
+.task-form-section {
+    margin-bottom: 35px;
+}
+
+.task-form-section label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    font-size: 14px;
+}
+
+.input-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(117, 65, 245, 0.12);
+}
+
+.input-group button {
+    padding: 14px 20px;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.input-group button:hover {
+    background: #5c2ed0;
+}
+
+
+/* =========================
+   5. TASK HEADING
+========================= */
+
+.task-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.task-heading h2 {
+    font-size: 22px;
+}
+
+#task-count {
+    color: var(--grey);
+    font-size: 13px;
+}
+
+
+/* =========================
+   6. FILTER BUTTONS
+========================= */
+
+.task-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 9px 17px;
+    background: var(--background);
+    color: var(--grey);
+    border: 1px solid transparent;
+    border-radius: 25px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+
+/* =========================
+   7. TASK LIST
+========================= */
+
+#task-list {
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.task-text {
+    flex: 1;
+    overflow-wrap: anywhere;
+    font-size: 14px;
+}
+
+.task-item.completed .task-text {
+    color: #9ba3b2;
+    text-decoration: line-through;
+}
+
+.delete-btn {
+    border: none;
+    background: transparent;
+    color: var(--danger);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+}
+
+.delete-btn:hover {
+    color: #a91f1f;
+}
+
+
+/* =========================
+   8. EMPTY MESSAGE
+========================= */
+
+#empty-message {
+    text-align: center;
+    color: var(--grey);
+    font-size: 14px;
+    padding: 25px 10px;
+}
+
+
+/* =========================
+   9. FOOTER
+========================= */
+
+.app-footer {
+    text-align: center;
+    margin-top: 35px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.app-footer p {
+    color: var(--grey);
+    font-size: 12px;
+}
+
+
+/* =========================
+   10. RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px 12px;
+    }
+
+    .app-container {
+        padding: 25px 18px;
+        border-radius: 14px;
+    }
+
+    .app-header h1 {
+        font-size: 30px;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .input-group button {
+        width: 100%;
+    }
+
+    .task-heading h2 {
+        font-size: 19px;
+    }
+
+    .task-filters {
+        gap: 7px;
+    }
+
+    .filter-btn {
+        padding: 9px 13px;
+        font-size: 12px;
+    }
+
+}
