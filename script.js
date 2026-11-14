@@ -90,13 +90,50 @@ function saveTasks() {
 /* ==========================================
    3. UPDATE TASK COUNTER
 ========================================== */
+   
+/* =========================
+   UPDATE DASHBOARD COUNTS
+========================= */
 
 function updateTaskCount() {
 
+    // Calculate total tasks
     const totalTasks = tasks.length;
 
+    // Calculate completed tasks
+    const completedTasks = tasks.filter(
+        task => task.completed
+    ).length;
+
+    // Calculate active tasks
+    const activeTasks = tasks.filter(
+        task => !task.completed
+    ).length;
+
+    // Calculate high-priority tasks
+    const highPriorityTasks = tasks.filter(
+        task => task.priority === "high"
+    ).length;
+
+
+    // Update the task counter
     taskCount.textContent =
         `${totalTasks} ${totalTasks === 1 ? "task" : "tasks"}`;
+
+
+    // Update dashboard cards
+
+    document.querySelector("#total-count").textContent =
+        totalTasks;
+
+    document.querySelector("#active-count").textContent =
+        activeTasks;
+
+    document.querySelector("#completed-count").textContent =
+        completedTasks;
+
+    document.querySelector("#high-priority-count").textContent =
+        highPriorityTasks;
 
 }
 
