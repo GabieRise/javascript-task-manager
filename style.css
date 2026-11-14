@@ -499,3 +499,73 @@ body {
     }
 
 }
+
+/* =========================
+   17. TASK PROGRESS BAR
+========================= */
+
+.progress-section {
+    margin: 25px 0 35px;
+    padding: 22px;
+    background: #f8f6ff;
+    border: 1px solid #e8ddff;
+    border-radius: 12px;
+}
+
+.progress-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.progress-heading h3 {
+    font-size: 16px;
+    color: #172033;
+}
+
+#progress-percentage {
+    font-size: 20px;
+    font-weight: bold;
+    color: #7541f5;
+}
+
+.progress-track {
+    width: 100%;
+    height: 12px;
+    background: #e4def2;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        #7541f5,
+        #a77aff
+    );
+    border-radius: 20px;
+    transition: width 0.4s ease;
+}
+
+#progress-summary {
+    margin-top: 10px;
+    color: #647084;
+    font-size: 13px;
+}
+
+/* Mobile adjustments */
+
+@media (max-width: 600px) {
+
+    .progress-section {
+        padding: 17px;
+    }
+
+    .progress-heading h3 {
+        font-size: 14px;
+    }
+
+}

@@ -89,39 +89,50 @@ function saveTasks() {
 
 /* ==========================================
    3. UPDATE TASK COUNTER
-========================================== */
-   
+========================================== */   
 /* =========================
    UPDATE DASHBOARD COUNTS
 ========================= */
 
+
+/* =========================
+   UPDATE TASK DASHBOARD
+   AND COMPLETION PROGRESS
+========================= */
+
 function updateTaskCount() {
 
-    // Calculate total tasks
+    // Calculate task totals
+
     const totalTasks = tasks.length;
 
-    // Calculate completed tasks
     const completedTasks = tasks.filter(
         task => task.completed
     ).length;
 
-    // Calculate active tasks
     const activeTasks = tasks.filter(
         task => !task.completed
     ).length;
 
-    // Calculate high-priority tasks
     const highPriorityTasks = tasks.filter(
         task => task.priority === "high"
     ).length;
 
 
-    // Update the task counter
+    // Calculate completion percentage
+
+    const progressPercentage = totalTasks === 0
+        ? 0
+        : Math.round((completedTasks / totalTasks) * 100);
+
+
+    // Update task counter
+
     taskCount.textContent =
         `${totalTasks} ${totalTasks === 1 ? "task" : "tasks"}`;
 
 
-    // Update dashboard cards
+    // Update dashboard statistics
 
     document.querySelector("#total-count").textContent =
         totalTasks;
@@ -135,7 +146,34 @@ function updateTaskCount() {
     document.querySelector("#high-priority-count").textContent =
         highPriorityTasks;
 
+
+    // Update progress percentage
+
+    document.querySelector("#progress-percentage").textContent =
+        `${progressPercentage}%`;
+
+
+    // Update progress bar width
+
+    document.querySelector("#progress-fill").style.width =
+        `${progressPercentage}%`;
+
+
+    // Update accessibility value
+
+    document.querySelector("#progress-track").setAttribute(
+        "aria-valuenow",
+        progressPercentage
+    );
+
+
+    // Update progress description
+
+    document.querySelector("#progress-summary").textContent =
+        `${completedTasks} of ${totalTasks} tasks completed`;
+
 }
+
 
 
 /* ==========================================
