@@ -1,12 +1,6 @@
 
 /* ==========================================
-   TASKFLOW - JAVASCRIPT TASK MANAGER
-   Features:
-   1. Add Tasks
-   2. Complete Tasks
-   3. Delete Tasks
-   4. Filter Tasks
-   5. Local Storage
+   TASKFLOW - COMPLETE TASK MANAGER
 ========================================== */
 
 
@@ -15,26 +9,21 @@
 ========================================== */
 
 const taskForm = document.querySelector("#task-form");
-
 const taskInput = document.querySelector("#task-input");
-
+const taskPriority = document.querySelector("#task-priority");
 const taskList = document.querySelector("#task-list");
-
 const taskCount = document.querySelector("#task-count");
-
 const emptyMessage = document.querySelector("#empty-message");
-
 const filterButtons = document.querySelectorAll(".filter-btn");
+const clearCompletedButton = document.querySelector("#clear-completed");
 
 
 /* ==========================================
-   2. LOCAL STORAGE CONFIGURATION
+   2. LOCAL STORAGE
 ========================================== */
 
 const STORAGE_KEY = "taskflow-tasks";
 
-
-/* Load saved tasks */
 
 function loadTasks() {
 
@@ -50,12 +39,19 @@ function loadTasks() {
             return [];
         }
 
-        return parsedTasks.filter(task =>
-            task &&
-            typeof task.id === "string" &&
-            typeof task.text === "string" &&
-            typeof task.completed === "boolean"
-        );
+        return parsedTasks
+            .filter(task =>
+                task &&
+                typeof task.id === "string" &&
+                typeof task.text === "string" &&
+                typeof task.completed === "boolean"
+            )
+            .map(task => ({
+                ...task,
+                priority: ["high", "medium", "low"].includes(task.priority)
+                    ? task.priority
+                    : "medium"
+            }));
 
     } catch (error) {
 
@@ -68,17 +64,10 @@ function loadTasks() {
 }
 
 
-/* Our main task collection */
-
 let tasks = loadTasks();
-
-
-/* Current filter selection */
 
 let currentFilter = "all";
 
-
-/* Save tasks to localStorage */
 
 function saveTasks() {
 
@@ -113,30 +102,24 @@ function updateTaskCount() {
 
 
 /* ==========================================
-   4. RENDER TASKS ON THE PAGE
+   4. RENDER TASKS
 ========================================== */
 
 function renderTasks() {
 
-    // Clear the existing task list
-
     taskList.replaceChildren();
 
 
-    // Filter tasks according to selection
+    // Filter tasks
 
     const filteredTasks = tasks.filter(task => {
 
         if (currentFilter === "active") {
-
             return !task.completed;
-
         }
 
         if (currentFilter === "completed") {
-
             return task.completed;
-
         }
 
         return true;
@@ -144,29 +127,21 @@ function renderTasks() {
     });
 
 
-    // Display each filtered task
+    // Display tasks
 
     filteredTasks.forEach(task => {
-
-        // Create task container
 
         const taskItem = document.createElement("li");
 
         taskItem.classList.add("task-item");
 
 
-        // Add completed styling when necessary
-
         if (task.completed) {
-
             taskItem.classList.add("completed");
-
         }
 
 
-        /* =================================
-           5. CREATE CHECKBOX
-        ================================= */
+        // Checkbox
 
         const checkbox = document.createElement("input");
 
@@ -182,9 +157,7 @@ function renderTasks() {
         );
 
 
-        /* =================================
-           6. CREATE TASK TEXT
-        ================================= */
+        // Task text
 
         const taskTextElement = document.createElement("span");
 
@@ -193,9 +166,39 @@ function renderTasks() {
         taskTextElement.textContent = task.text;
 
 
-        /* =================================
-           7. CREATE DELETE BUTTON
-        ================================= */
+        // Priority badge
+
+        const priorityBadge = document.createElement("span");
+
+        priorityBadge.classList.add(
+            "priority-badge",
+            `priority-${task.priority}`
+        );
+
+        priorityBadge.textContent =
+            task.priority.charAt(0).toUpperCase() +
+            task.priority.slice(1);
+
+
+        // Task actions container
+
+        const taskActions = document.createElement("div");
+
+        taskActions.classList.add("task-actions");
+
+
+        // Edit button
+
+        const editButton = document.createElement("button");
+
+        editButton.type = "button";
+
+        editButton.classList.add("edit-btn");
+
+        editButton.textContent = "Edit";
+
+
+        // Delete button
 
         const deleteButton = document.createElement("button");
 
@@ -203,27 +206,18 @@ function renderTasks() {
 
         deleteButton.classList.add("delete-btn");
 
-        deleteButton.textContent = "×";
-
-        deleteButton.setAttribute(
-            "aria-label",
-            `Delete ${task.text}`
-        );
+        deleteButton.textContent = "Delete";
 
 
         /* =================================
-           8. MARK TASK AS COMPLETED
+           5. COMPLETE TASK
         ================================= */
 
         checkbox.addEventListener("change", () => {
 
             task.completed = checkbox.checked;
 
-            // Save updated task status
-
             saveTasks();
-
-            // Refresh task display
 
             renderTasks();
 
@@ -231,20 +225,51 @@ function renderTasks() {
 
 
         /* =================================
-           9. DELETE TASK
+           6. EDIT TASK
+        ================================= */
+
+        editButton.addEventListener("click", () => {
+
+            const updatedTask = prompt(
+                "Edit your task:",
+                task.text
+            );
+
+            // Stop if user cancels
+            if (updatedTask === null) {
+                return;
+            }
+
+            const cleanTask = updatedTask.trim();
+
+            // Prevent empty task
+            if (cleanTask === "") {
+
+                alert("Task cannot be empty.");
+
+                return;
+
+            }
+
+            // Update task
+            task.text = cleanTask;
+
+            saveTasks();
+
+            renderTasks();
+
+        });
+
+
+        /* =================================
+           7. DELETE TASK
         ================================= */
 
         deleteButton.addEventListener("click", () => {
 
-            // Remove selected task from collection
-
             tasks = tasks.filter(item => item.id !== task.id);
 
-            // Save updated collection
-
             saveTasks();
-
-            // Refresh display
 
             renderTasks();
 
@@ -252,17 +277,20 @@ function renderTasks() {
 
 
         /* =================================
-           10. ADD ELEMENTS TO TASK ITEM
+           8. APPEND ELEMENTS
         ================================= */
+
+        taskActions.appendChild(editButton);
+
+        taskActions.appendChild(deleteButton);
 
         taskItem.appendChild(checkbox);
 
         taskItem.appendChild(taskTextElement);
 
-        taskItem.appendChild(deleteButton);
+        taskItem.appendChild(priorityBadge);
 
-
-        // Add task item to the page
+        taskItem.appendChild(taskActions);
 
         taskList.appendChild(taskItem);
 
@@ -270,11 +298,10 @@ function renderTasks() {
 
 
     /* =================================
-       11. EMPTY MESSAGE
+       9. EMPTY MESSAGE
     ================================= */
 
     emptyMessage.hidden = filteredTasks.length > 0;
-
 
     if (tasks.length === 0) {
 
@@ -292,14 +319,26 @@ function renderTasks() {
 
 
     /* =================================
-       12. UPDATE TASK COUNTER
+       10. UPDATE COUNTER
     ================================= */
 
     updateTaskCount();
 
 
     /* =================================
-       13. UPDATE FILTER BUTTONS
+       11. CLEAR COMPLETED BUTTON
+    ================================= */
+
+    if (clearCompletedButton) {
+
+        clearCompletedButton.disabled =
+            !tasks.some(task => task.completed);
+
+    }
+
+
+    /* =================================
+       12. UPDATE FILTER BUTTONS
     ================================= */
 
     filterButtons.forEach(button => {
@@ -320,24 +359,23 @@ function renderTasks() {
 
 
 /* ==========================================
-   14. ADD NEW TASKS
+   13. ADD NEW TASKS
 ========================================== */
 
-if (taskForm && taskInput && taskList && taskCount && emptyMessage) {
+if (
+    taskForm &&
+    taskInput &&
+    taskPriority &&
+    taskList &&
+    taskCount &&
+    emptyMessage
+) {
 
-    taskForm.addEventListener("submit", (event) => {
-
-        // Prevent automatic page refresh
+    taskForm.addEventListener("submit", event => {
 
         event.preventDefault();
 
-
-        // Get input and remove unnecessary spaces
-
         const taskText = taskInput.value.trim();
-
-
-        // Prevent empty tasks
 
         if (taskText === "") {
 
@@ -348,7 +386,7 @@ if (taskForm && taskInput && taskList && taskCount && emptyMessage) {
         }
 
 
-        // Create a new task object
+        // Create new task
 
         const newTask = {
 
@@ -358,29 +396,23 @@ if (taskForm && taskInput && taskList && taskCount && emptyMessage) {
 
             text: taskText,
 
-            completed: false
+            completed: false,
+
+            priority: taskPriority.value
 
         };
 
 
-        // Add new task to our collection
-
         tasks.push(newTask);
 
-
-        // Save task to localStorage
-
         saveTasks();
-
-
-        // Update the webpage
 
         renderTasks();
 
 
-        // Clear input field
+        // Clear form
 
-        taskInput.value = "";
+        taskForm.reset();
 
         taskInput.focus();
 
@@ -388,25 +420,54 @@ if (taskForm && taskInput && taskList && taskCount && emptyMessage) {
 
 
     /* =================================
-       15. FILTER TASKS
+       14. TASK FILTERING
     ================================= */
 
     filterButtons.forEach(button => {
 
         button.addEventListener("click", () => {
 
-            // Get selected category
-
             currentFilter = button.dataset.filter;
-
-
-            // Display matching tasks
 
             renderTasks();
 
         });
 
     });
+
+
+    /* =================================
+       15. CLEAR COMPLETED TASKS
+    ================================= */
+
+    if (clearCompletedButton) {
+
+        clearCompletedButton.addEventListener("click", () => {
+
+            const hasCompletedTasks =
+                tasks.some(task => task.completed);
+
+            if (!hasCompletedTasks) {
+                return;
+            }
+
+            const confirmed = confirm(
+                "Are you sure you want to remove all completed tasks?"
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            tasks = tasks.filter(task => !task.completed);
+
+            saveTasks();
+
+            renderTasks();
+
+        });
+
+    }
 
 
     /* =================================

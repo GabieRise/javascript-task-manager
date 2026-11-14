@@ -22,33 +22,75 @@
         </header>
 
         <!-- Task Form -->
-        <section class="task-form-section">
+        
+<!-- TASK FORM -->
 
-            <form id="task-form">
+<section class="task-form-section">
 
-                <label for="task-input">What do you need to do?</label>
+    <form id="task-form">
 
-                <div class="input-group">
+        <label for="task-input">
+            What do you need to do?
+        </label>
 
-                    <input
-                        type="text"
-                        id="task-input"
-                        placeholder="Enter a new task..."
-                        required
-                    >
+        <div class="input-group">
 
-                    <button type="submit">
-                        Add Task
-                    </button>
+            <input
+                type="text"
+                id="task-input"
+                placeholder="Enter a new task..."
+                required
+            >
 
-                </div>
+            <!-- Priority Selection -->
 
-            </form>
+            <select id="task-priority" name="priority">
+                <option value="low">Low Priority</option>
+                <option value="medium" selected>Medium Priority</option>
+                <option value="high">High Priority</option>
+            </select>
 
-        </section>
+            <button type="submit">
+                Add Task
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
 
         <!-- Task Filters -->
         <section class="task-section">
+
+
+<!-- TASK SUMMARY DASHBOARD -->
+
+<div class="task-summary">
+
+    <article class="summary-card">
+        <span>Total Tasks</span>
+        <h3 id="total-count">0</h3>
+    </article>
+
+    <article class="summary-card">
+        <span>Active Tasks</span>
+        <h3 id="active-count">0</h3>
+    </article>
+
+    <article class="summary-card">
+        <span>Completed Tasks</span>
+        <h3 id="completed-count">0</h3>
+    </article>
+
+    <article class="summary-card">
+        <span>High Priority</span>
+        <h3 id="high-priority-count">0</h3>
+    </article>
+
+</div>
+
 
             <div class="task-heading">
                 <h2>My Tasks</h2>
@@ -81,6 +123,20 @@
             </p>
 
         </section>
+
+
+<div class="task-toolbar">
+
+    <button
+        type="button"
+        id="clear-completed"
+        class="clear-completed-btn"
+    >
+        Clear Completed
+    </button>
+
+</div>
+
 
         <footer class="app-footer">
             <p>Built with HTML, CSS and JavaScript.</p>

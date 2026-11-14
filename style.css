@@ -292,3 +292,154 @@ body {
     }
 
 }
+
+
+/* =========================
+   11. TASK PRIORITY SELECTOR
+========================= */
+
+.input-group select {
+    padding: 14px 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background-color: var(--white);
+    color: var(--dark);
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+}
+
+.input-group select:focus {
+    border-color: var(--primary);
+}
+
+
+/* =========================
+   12. TASK PRIORITY BADGES
+========================= */
+
+.priority-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.priority-high {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.priority-medium {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.priority-low {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+
+/* =========================
+   13. TASK ACTION BUTTONS
+========================= */
+
+.task-item {
+    flex-wrap: wrap;
+}
+
+.task-text {
+    min-width: 100px;
+}
+
+.task-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.edit-btn,
+.delete-btn {
+    border: none;
+    background: transparent;
+    padding: 6px 9px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.edit-btn {
+    color: var(--primary);
+}
+
+.edit-btn:hover {
+    background-color: var(--primary-light);
+}
+
+.delete-btn {
+    color: var(--danger);
+}
+
+.delete-btn:hover {
+    background-color: #fee2e2;
+}
+
+
+/* =========================
+   14. CLEAR COMPLETED BUTTON
+========================= */
+
+.task-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 18px;
+}
+
+.clear-completed-btn {
+    background: transparent;
+    border: 1px solid #e44848;
+    color: #e44848;
+    padding: 8px 13px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clear-completed-btn:hover:not(:disabled) {
+    background-color: #e44848;
+    color: white;
+}
+
+.clear-completed-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   15. MOBILE ADJUSTMENTS
+========================= */
+
+@media (max-width: 600px) {
+
+    .input-group select {
+        width: 100%;
+    }
+
+    .task-item {
+        gap: 9px;
+    }
+
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+}
