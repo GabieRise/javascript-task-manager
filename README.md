@@ -72,4 +72,4 @@ Screenshots will be added here.
 
 ---
 
-Built with ❤️ using HTML, CSS, and JavaScript.
+Built with 🌐 using HTML, CSS, and JavaScript.
