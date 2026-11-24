@@ -177,7 +177,7 @@ function updateTaskCount() {
 
 
 /* ==========================================
-   4. RENDER TASKS
+   4. RENDER TASKS easy
 ========================================== */
 
 function renderTasks() {
